@@ -2,46 +2,70 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"math/rand"
 	"net/http"
-	"os"
+	"strconv"
 )
 
-// 파일 처리
-func upload() error {
+func mainHanlder(w http.ResponseWriter, r *http.Request) {
+	w.Write("Test")
+}
 
+func uploadHandler(w http.ResponseWriter, r *http.Request) error {
+	setID(w, r)
 	return nil
 }
-func getCookie(w http.ResponseWriter, r *http.Request) int{
-	saved, err := r.Cookie("") //key, value로 쿠키를 가져옴
+
+func resultHanlder() error {
+	return nil
+}
+
+func getID(w http.ResponseWriter, r *http.Request) int {
+	id, err := r.Cookie("id") //key, value로 쿠키를 가져옴
 	if err != nil {
 		//쿠키가 없으니 nil 리턴
-		return nil
-	} else{
+		return -1
+	} else {
 		//쿠키를 기반으로 결과창으로 넘기기 위해 값을 리턴
-		return 1
-}
-func setCookie(w http.ResponseWriter, r *http.Request) int{
-	idnumber := math.rand()
-	willsave := http.Cookie{
-		Name:	"idnumber",
-		Value:	math.rand()
+		cvalue, verr := strconv.Atoi(id.Value) //쿠키를 가져와서 string을 int로 바꿈
+		if verr != nil {                       //오류가 없으면 id값 반환
+			return cvalue
+		} else {
+			panic(verr)
+		}
 	}
 }
 
-// 쿠키 설정 관련 함수 작성
+func setID(w http.ResponseWriter, r *http.Request) int {
+	id := rand.Int()
+	cookieid := http.Cookie{
+		Name:     "id",
+		Value:    strconv.Itoa(id),
+		HttpOnly: true,
+	}
+	//w.Header().Set("Set-Cookie", cookieid.String())
+	http.SetCookie(w, &cookieid)
+	return id
+}
 
 func urlHandle(w http.ResponseWriter, r *http.Request) {
-	sv_urlpath := r.URL.Path[1:]
+	sv_urlpath := r.URL.Path[1:] //sv_urlpath에 유저가 어떤 Url을 쳤는지 저장됨
 	if sv_urlpath == "upload" {
-		upload()
+
 	} else if sv_urlpath == "result" {
-		//결과 표시해주는 창 
+		//결과 표시해주는 창
 	} else {
-		fmt.Fprintf(w, "%s", sv_urlpath) 
+		fmt.Fprintf(w, "%s", sv_urlpath)
 	}
 }
 
 func main() {
-	http.HandleFunc("/", urlHandle)
-	http.ListenAndServe(":8080", nil)
+	server := http.NewServeMux()
+	server.Handle("/", http.HandlerFunc(urlHandle))
+	err := http.ListenAndServe(":8080", server)
+	if err != nil { // http 서버 시작 중 문제 발생시
+		log.Fatal(err)
+		panic(err)
+	}
 }
