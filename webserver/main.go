@@ -10,6 +10,18 @@ import (
 	"strconv"
 )
 
+func errHander(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	wwwfile, err := ioutil.ReadFile("./www/err.html")
+	if err != nil {
+		fmt.Println("www/err.html 을 로드할 수 없음")
+		log.Fatal(err)
+		panic(err)
+	} else {
+		fmt.Fprintf(w, string(wwwfile))
+	}
+}
+
 func mainHanlder(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	wwwfile, err := ioutil.ReadFile("./www/main.html")
@@ -28,7 +40,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
-func resultHanlder() error {
+func resultHanlder(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
@@ -73,10 +85,13 @@ func urlHandle(w http.ResponseWriter, r *http.Request) {
 		mainHanlder(w, r)
 	} else if sv_urlpath == "result" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", getIp(r))
-		//결과 표시해주는 창
+		resultHanlder(w, r)
 	} else if sv_urlpath == "upload" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", getIp(r))
-		fmt.Fprintf(w, "%s", sv_urlpath)
+		uploadHandler(w, r)
+	} else {
+		fmt.Println("잘못된 Path: ", sv_urlpath, "IP주소: ", getIp(r))
+		errHander(w, r)
 	}
 }
 

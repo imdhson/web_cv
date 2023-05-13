@@ -7,9 +7,10 @@
 <h3> 이곳에 업로드폼이 오게될 것.</h3>
 
 
-<form action="/upload">
+<form action="/upload" enctype="multipart/form-data" method="post">
+    
     <input type="file" id="originfile" name="originfile">
-    <input type="submit">
+    <input type="submit" value="업로드">
   </form>
 
 </body>
