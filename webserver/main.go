@@ -11,7 +11,7 @@ import (
 )
 
 func mainHanlder(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html;charset = utf-8")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	wwwfile, err := ioutil.ReadFile("./www/main.html")
 	if err != nil {
 		fmt.Println("www/main.html 을 로드할 수 없음")
@@ -23,7 +23,8 @@ func mainHanlder(w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadHandler(w http.ResponseWriter, r *http.Request) error {
-	setID(w, r)
+	//nowid := setID(w, r)
+
 	return nil
 }
 
@@ -32,7 +33,7 @@ func resultHanlder() error {
 }
 
 func getID(w http.ResponseWriter, r *http.Request) int {
-	id, err := r.Cookie("id") //key, value로 쿠키를 가져옴
+	id, err := r.Cookie("id") //key to value로 쿠키를 가져옴
 	if err != nil {
 		//쿠키가 없으니 nil 리턴
 		return -1
