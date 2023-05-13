@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
+	"net"
 	"net/http"
 	"strconv"
 )
 
 func mainHanlder(w http.ResponseWriter, r *http.Request) {
-	w.Write("Test")
+	fmt.Fprintf(w, "Test")
 }
 
 func uploadHandler(w http.ResponseWriter, r *http.Request) error {
@@ -49,10 +50,17 @@ func setID(w http.ResponseWriter, r *http.Request) int {
 	return id
 }
 
+func getIp(r *http.Request) string {
+	ip := r.Header.Get("X-REAL-IP")
+	netIp := net.ParseIP(ip)
+	return netIp.String()
+}
+
 func urlHandle(w http.ResponseWriter, r *http.Request) {
 	sv_urlpath := r.URL.Path[1:] //sv_urlpath에 유저가 어떤 Url을 쳤는지 저장됨
-	if sv_urlpath == "upload" {
-
+	if sv_urlpath == "" || sv_urlpath == "/" {
+		mainHanlder(w, r)
+		fmt.Println("IN: ", sv_urlpath, getIp(r))
 	} else if sv_urlpath == "result" {
 		//결과 표시해주는 창
 	} else {
