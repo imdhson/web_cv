@@ -45,7 +45,8 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 	filetype := dotFileType(fHeader.Filename)
 	defer file.Close()
 	fileByte, err := ioutil.ReadAll(file)
-	ioutil.WriteFile(strconv.Itoa(nowid)+"."+filetype, fileByte, 0644)
+	willfilePath := "../files/" + strconv.Itoa(nowid) + "." + filetype
+	ioutil.WriteFile(willfilePath, fileByte, 0644) //랜덤한 id 뒤에 파일 확장자를 붙여서 파일을 씁니다.
 	return nil
 }
 
