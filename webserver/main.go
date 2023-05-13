@@ -35,13 +35,32 @@ func mainHanlder(w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadHandler(w http.ResponseWriter, r *http.Request) error {
-	//nowid := setID(w, r)
-
+	nowid := setID(w, r)
+	file, fHeader, err := r.FormFile("originFile")
+	if err != nil {
+		fmt.Println("파일 수신 중 에러 발생", err)
+		return err
+	}
+	fmt.Println(getIp(r), "에게서 업로드된 파일이름: ", fHeader.Filename)
+	filetype := dotFileType(fHeader.Filename)
+	defer file.Close()
+	fileByte, err := ioutil.ReadAll(file)
+	ioutil.WriteFile(strconv.Itoa(nowid)+"."+filetype, fileByte, 0644)
 	return nil
 }
 
 func resultHanlder(w http.ResponseWriter, r *http.Request) error {
 	return nil
+}
+
+func dotFileType(in string) string { //파일 이름을 받으면 . 이후의 확장자만 리턴하여 줍니다.
+	in2 := []rune(in)
+	for i, v := range in2 {
+		if string(v) == "." {
+			return in[i+1:]
+		}
+	}
+	return "None"
 }
 
 func getID(w http.ResponseWriter, r *http.Request) int {
