@@ -81,7 +81,7 @@ func getID(w http.ResponseWriter, r *http.Request) int {
 }
 
 func setID(w http.ResponseWriter, r *http.Request) int {
-	id := rand.Int()
+	id := rand.Intn(100000)
 	cookieid := http.Cookie{
 		Name:     "id",
 		Value:    strconv.Itoa(id),
