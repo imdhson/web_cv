@@ -41,12 +41,12 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 		fmt.Println("파일 수신 중 에러 발생", err)
 		return err
 	}
-	fmt.Println(getIp(r), "에게서 업로드된 파일이름: ", fHeader.Filename)
 	filetype := dotFileType(fHeader.Filename)
+	fmt.Println(getIp(r), "에게서 업로드된 파일이름: ", fHeader.Filename, "파일타입: ", filetype)
 	defer file.Close()
 	fileByte, err := ioutil.ReadAll(file)
 	willfilePath := "../files/" + strconv.Itoa(nowid) + "." + filetype
-	ioutil.WriteFile(willfilePath, fileByte, 0644) //랜덤한 id 뒤에 파일 확장자를 붙여서 파일을 씁니다.
+	ioutil.WriteFile(willfilePath, fileByte, 0644) //랜덤한 id.확장자 형식으로 파일을 씁니다.
 	return nil
 }
 
@@ -56,9 +56,10 @@ func resultHanlder(w http.ResponseWriter, r *http.Request) error {
 
 func dotFileType(in string) string { //파일 이름을 받으면 . 이후의 확장자만 리턴하여 줍니다.
 	in2 := []rune(in)
-	for i, v := range in2 {
-		if string(v) == "." {
-			return in[i+1:]
+	for i := len(in2) - 1; i >= 0; i-- {
+		v := string(in2[i])
+		if v == "." {
+			return string(in2[i+1:])
 		}
 	}
 	return "None"
