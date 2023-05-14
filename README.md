@@ -1,2 +1,4 @@
 # web_cv
-collaborative with hjlee
+A simple way to using OpenCV function on the web.
+대구대학교 컴퓨터공학과 손동휘, 이현준
+
