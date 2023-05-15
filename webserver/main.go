@@ -12,13 +12,21 @@ import (
 	"strconv"
 )
 
-func exec_cv() {
-	cmd := exec.Command("ls", "-al")
+func exec_cv(mode string, filename string) error {
+	var vexec string
+	if mode == "hog" {
+		vexec = "main.py" //나중에 수정
+	} else if mode == "main" { //나중에 수정
+		vexec = "main.py" //나중에 수정
+	}
+	arg1 := "../opencv/" + vexec
+	cmd := exec.Command(arg1, filename)
 	cmd.Stdout = os.Stdout
 
 	if err := cmd.Run(); err != nil {
 		fmt.Println(err)
 	}
+	return nil
 }
 
 func errHander(w http.ResponseWriter, r *http.Request) {
@@ -54,13 +62,14 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 		fmt.Fprintf(w, "Error 발생")
 		return err
 	}
-	exec_cv(mode)
 	filetype := dotFileType(fHeader.Filename)
 	fmt.Println(getIp(r), "에게서 업로드된 파일이름: ", fHeader.Filename, "파일타입: ", filetype)
 	defer file.Close()
 	fileByte, err := ioutil.ReadAll(file)
-	willfilePath := "../files/" + strconv.Itoa(nowid) + "." + filetype
+	willfileName := strconv.Itoa(nowid) + "." + filetype
+	willfilePath := "../files/" + willfileName
 	ioutil.WriteFile(willfilePath, fileByte, 0644) //랜덤한 id.확장자 형식으로 파일을 씁니다.
+	exec_cv(mode, willfileName)
 	return nil
 }
 
