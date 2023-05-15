@@ -12,6 +12,14 @@ import (
 	"strconv"
 )
 
+const (
+	jpeg = 1
+	jpg  = 2
+	png  = 3
+	mp4  = 4
+	avi  = 5
+)
+
 func exec_cv(mode string, filename string) bool {
 	var vexec string
 	if mode == "hog" {
@@ -59,8 +67,8 @@ func mainHanlder(w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadHandler(w http.ResponseWriter, r *http.Request) error {
-	nowid := setID(w, r)
 	mode := r.FormValue("cvmode")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	file, fHeader, err := r.FormFile("originFile")
 	if err != nil {
 		fmt.Println("파일 수신 중 에러 발생", err)
@@ -68,20 +76,35 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 	filetype := dotFileType(fHeader.Filename)
-	fmt.Println(getIp(r), "에게서 업로드된 파일이름: ", fHeader.Filename, "파일타입: ", filetype)
+	nowid := [2]string{setID(w, r, filetype), filetype}
+	fmt.Println(getIp(r), "에게서 업로드된 파일이름: ", fHeader.Filename, "파일타입: ", filetype, "nowid: ", nowid)
 	defer file.Close()
 	fileByte, err := ioutil.ReadAll(file)
-	willfileName := strconv.Itoa(nowid) + "." + filetype
+	willfileName := nowid[0] + "." + filetype
 	willfilePath := "../files/" + willfileName
 	ioutil.WriteFile(willfilePath, fileByte, 0644) //랜덤한 id.확장자 형식으로 파일을 씁니다.
 	success := exec_cv(mode, willfileName)
+	if success {
+		fmt.Fprintf(w, "<meta http-equiv=\"refresh\" content=\"0;url=/result\">")
+	}
 	return nil
 }
 
 func resultHanlder(w http.ResponseWriter, r *http.Request) error {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	nowid := getID(w, r)
+
+	nowid, filetype := getID(w, r)
+	willfileName := nowid + "." + filetype
+	willfilePath := "../files/" + willfileName
+	file, err := ioutil.ReadFile(willfilePath)
+	if err != nil {
+		fmt.Println("www/main.html 을 로드할 수 없음")
+		//log.Fatal(err)
+	} else {
+		w.Header().Set("Content-Type", "image/jpeg; charset=utf-8") // 이미지인 경우
+		w.Write(file)
+	}
 	fmt.Fprintf(w, "이 세션의 고유 번호: "+string(nowid))
+
 	return nil
 }
 
@@ -96,27 +119,34 @@ func dotFileType(in string) string { //파일 이름을 받으면 . 이후의 �
 	return "None"
 }
 
-func getID(w http.ResponseWriter, r *http.Request) string {
-	id, err := r.Cookie("id") //key to value로 쿠키를 가져옴
+func getID(w http.ResponseWriter, r *http.Request) (string, string) {
+	id, err := r.Cookie("id")      //key to value로 쿠키를 가져옴
+	ctype, err := r.Cookie("type") //key to value로 쿠키를 가져옴
 	if err != nil {
 		//쿠키가 없으니 nil 리턴
-		return "empty"
+		return "", ""
 	} else {
 		//쿠키를 기반으로 결과창으로 넘기기 위해 값을 리턴
-		return id.Value
+		return id.Value, ctype.Value
 	}
 }
 
-func setID(w http.ResponseWriter, r *http.Request) int {
+func setID(w http.ResponseWriter, r *http.Request, filetype string) string {
 	id := rand.Intn(100000)
 	cookieid := http.Cookie{
 		Name:     "id",
 		Value:    strconv.Itoa(id),
 		HttpOnly: true,
 	}
+	cookietype := http.Cookie{
+		Name:     "type",
+		Value:    filetype,
+		HttpOnly: true,
+	}
 	//w.Header().Set("Set-Cookie", cookieid.String())
 	http.SetCookie(w, &cookieid)
-	return id
+	http.SetCookie(w, &cookietype)
+	return strconv.Itoa(id)
 }
 
 func getIp(r *http.Request) string {
