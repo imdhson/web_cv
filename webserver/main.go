@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-func exec_cv(mode string, filename string) error {
+func exec_cv(mode string, filename string) bool {
 	var vexec string
 	if mode == "hog" {
 		vexec = "main.py" //나중에 수정
@@ -21,13 +21,17 @@ func exec_cv(mode string, filename string) error {
 	}
 	arg1 := "../opencv/" + vexec
 	arg2 := "../files/" + filename
-	cmd := exec.Command("python", arg1, arg2) // 예시: python ../opencv/main.py ive.jpeg 를 터미널에서 실행하는 것과 같은 효과임
+	//arg3 := dotFileType(filename)
+	fmt.Println("실행중: python3", arg1, arg2)
+	cmd := exec.Command("python3", arg1, arg2) // 예시: python ../opencv/main.py ive.jpeg 를 터미널에서 실행하는 것과 같은 효과임
 	cmd.Stdout = os.Stdout
 
 	if err := cmd.Run(); err != nil {
 		fmt.Println(err)
+		return false
+	} else {
+		return true
 	}
-	return nil
 }
 
 func errHander(w http.ResponseWriter, r *http.Request) {
@@ -70,7 +74,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 	willfileName := strconv.Itoa(nowid) + "." + filetype
 	willfilePath := "../files/" + willfileName
 	ioutil.WriteFile(willfilePath, fileByte, 0644) //랜덤한 id.확장자 형식으로 파일을 씁니다.
-	exec_cv(mode, willfileName)
+	success := exec_cv(mode, willfileName)
 	return nil
 }
 
