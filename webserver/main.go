@@ -20,7 +20,8 @@ func exec_cv(mode string, filename string) error {
 		vexec = "main.py" //나중에 수정
 	}
 	arg1 := "../opencv/" + vexec
-	cmd := exec.Command(arg1, filename) // 예시: python ../opencv/main.py ive.jpeg 를 터미널에서 실행하는 것과 같은 효과임
+	arg2 := "../files/" + filename
+	cmd := exec.Command(arg1, arg2) // 예시: python ../opencv/main.py ive.jpeg 를 터미널에서 실행하는 것과 같은 효과임
 	cmd.Stdout = os.Stdout
 
 	if err := cmd.Run(); err != nil {

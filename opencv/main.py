@@ -1,8 +1,10 @@
 import cv2
 from matplotlib import pyplot as plt
+import sys
 
+filename = sys.argv[1]
 #1
-src = cv2.imread('./files/test.jpeg')
+src = cv2.imread(filename)
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
