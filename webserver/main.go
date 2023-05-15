@@ -51,6 +51,9 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 }
 
 func resultHanlder(w http.ResponseWriter, r *http.Request) error {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	nowid := getID(w, r)
+	fmt.Fprintf(w, "이 세션의 고유 번호: "+string(nowid))
 	return nil
 }
 
@@ -65,19 +68,14 @@ func dotFileType(in string) string { //파일 이름을 받으면 . 이후의 �
 	return "None"
 }
 
-func getID(w http.ResponseWriter, r *http.Request) int {
+func getID(w http.ResponseWriter, r *http.Request) string {
 	id, err := r.Cookie("id") //key to value로 쿠키를 가져옴
 	if err != nil {
 		//쿠키가 없으니 nil 리턴
-		return -1
+		return "empty"
 	} else {
 		//쿠키를 기반으로 결과창으로 넘기기 위해 값을 리턴
-		cvalue, verr := strconv.Atoi(id.Value) //쿠키를 가져와서 string을 int로 바꿈
-		if verr != nil {                       //오류가 없으면 id값 반환
-			return cvalue
-		} else {
-			panic(verr)
-		}
+		return id.Value
 	}
 }
 
