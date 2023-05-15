@@ -7,8 +7,19 @@ import (
 	"math/rand"
 	"net"
 	"net/http"
+	"os"
+	"os/exec"
 	"strconv"
 )
+
+func exec_cv() {
+	cmd := exec.Command("ls", "-al")
+	cmd.Stdout = os.Stdout
+
+	if err := cmd.Run(); err != nil {
+		fmt.Println(err)
+	}
+}
 
 func errHander(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -43,9 +54,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 		fmt.Fprintf(w, "Error 발생")
 		return err
 	}
-	if mode == "hog" {
-
-	}
+	exec_cv(mode)
 	filetype := dotFileType(fHeader.Filename)
 	fmt.Println(getIp(r), "에게서 업로드된 파일이름: ", fHeader.Filename, "파일타입: ", filetype)
 	defer file.Close()
@@ -123,6 +132,7 @@ func main() {
 	const PORT int = 8080
 	server := http.NewServeMux()
 	server.Handle("/", http.HandlerFunc(urlHandle))
+	fmt.Println("http://localhost:"+strconv.Itoa(PORT), "에서 요청을 기다리는 중:")
 	err := http.ListenAndServe(":"+strconv.Itoa(PORT), server)
 	if err != nil { // http 서버 시작 중 문제 발생시
 		log.Fatal(err)
