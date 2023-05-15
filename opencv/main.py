@@ -3,6 +3,7 @@ from matplotlib import pyplot as plt
 import sys
 
 filename = sys.argv[1]
+
 #1
 src = cv2.imread(filename)
 hog = cv2.HOGDescriptor()
@@ -16,7 +17,6 @@ w, h = hog.winSize
 for pt in loc1:
     x, y = pt
     cv2.rectangle(dst1, (x, y), (x + w, y + h), (255, 0, 0), 2)
-cv2.imshow('dst1', dst1)
 
 #3
 dst2 = src.copy()
@@ -25,7 +25,6 @@ print('len(loc2)=', len(loc2))
 for rect in loc2:
     x, y, w, h = rect
     cv2.rectangle(dst2, (x, y), (x + w, y + h), (0, 255, 0), 2)
-cv2.imshow('dst2', dst2)
 
 #4
 dst3 = src.copy()
@@ -38,7 +37,10 @@ for i, rect in enumerate(loc3):
     else:
         cv2.rectangle(dst3, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
-
-cv2.imshow('dst3', dst3)
-cv2.waitKey()
-cv2.destroyAllWindows()
+'''f = open("debug.txt", "w")
+f.write("filename")
+f.close()'''
+#cv2.imshow('dst3', dst3)
+#cv2.waitKey()
+#cv2.destroyAllWindows()
+cv2.imwrite(filename, dst3)
