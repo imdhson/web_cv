@@ -36,10 +36,15 @@ func mainHanlder(w http.ResponseWriter, r *http.Request) {
 
 func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 	nowid := setID(w, r)
+	mode := r.FormValue("cvmode")
 	file, fHeader, err := r.FormFile("originFile")
 	if err != nil {
 		fmt.Println("파일 수신 중 에러 발생", err)
+		fmt.Fprintf(w, "Error 발생")
 		return err
+	}
+	if mode == "hog" {
+
 	}
 	filetype := dotFileType(fHeader.Filename)
 	fmt.Println(getIp(r), "에게서 업로드된 파일이름: ", fHeader.Filename, "파일타입: ", filetype)
