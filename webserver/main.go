@@ -24,8 +24,8 @@ func exec_cv(mode string, filename string) bool {
 	var vexec string
 	if mode == "hog" {
 		vexec = "main.py" //나중에 수정
-	} else if mode == "main" { //나중에 수정
-		vexec = "main.py" //나중에 수정
+	} else if mode == "haar" { //나중에 수정
+		vexec = "haar.py" //나중에 수정
 	}
 	arg1 := "../opencv/" + vexec
 	arg2 := "../files/" + filename
