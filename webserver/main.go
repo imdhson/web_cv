@@ -56,9 +56,9 @@ func errHander(w http.ResponseWriter, r *http.Request) {
 
 func mainHanlder(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	wwwfile, err := ioutil.ReadFile("./www/main.html")
+	wwwfile, err := ioutil.ReadFile("./www/main/main.html")
 	if err != nil {
-		fmt.Println("www/main.html 을 로드할 수 없음")
+		fmt.Println("www/main/main.html 을 로드할 수 없음")
 		log.Fatal(err)
 		panic(err)
 	} else {
@@ -159,6 +159,9 @@ func urlHandle(w http.ResponseWriter, r *http.Request) {
 	sv_urlpath := r.URL.Path[1:] //sv_urlpath에 유저가 어떤 url을 요청했는지 저장됨
 	if sv_urlpath == "" {
 		fmt.Println("Path: /", "IP주소: ", getIp(r))
+		mainHanlder(w, r)
+	} else if len(sv_urlpath) > 1 && sv_urlpath[0:4] == "main" { //첫 조건에 길이 확인이 있는 이유는 인덱스 초과 슬라이싱을 막기 위함.
+		fmt.Println(sv_urlpath, sv_urlpath[0:4], sv_urlpath[3:])
 		mainHanlder(w, r)
 	} else if sv_urlpath == "result" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", getIp(r))
