@@ -113,8 +113,18 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 	}
 	return nil
 }
-
-func resultHanlder(w http.ResponseWriter, r *http.Request) error {
+func resultHanlder(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	wwwfile, err := ioutil.ReadFile("./www/result.html")
+	if err != nil {
+		fmt.Println("www/main/main.html 을 로드할 수 없음")
+		log.Fatal(err)
+		panic(err)
+	} else {
+		w.Write(wwwfile)
+	}
+}
+func resultFileHanlder(w http.ResponseWriter, r *http.Request) error {
 
 	nowid, filetype := getID(w, r)
 	willfileName := nowid + "." + filetype
@@ -193,6 +203,9 @@ func urlHandler(w http.ResponseWriter, r *http.Request) {
 	} else if sv_urlpath == "result" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", getIp(r))
 		resultHanlder(w, r)
+	} else if sv_urlpath == "result/file" {
+		fmt.Println("Path: ", sv_urlpath, "IP주소: ", getIp(r))
+		resultFileHanlder(w, r)
 	} else if sv_urlpath == "upload" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", getIp(r))
 		uploadHandler(w, r)
