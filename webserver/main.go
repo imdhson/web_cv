@@ -43,7 +43,7 @@ func errHander(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 		panic(err)
 	} else {
-		fmt.Fprintf(w, string(wwwfile))
+		w.Write(wwwfile)
 	}
 }
 
@@ -55,7 +55,7 @@ func mainHanlder(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 		panic(err)
 	} else {
-		fmt.Fprintf(w, string(wwwfile))
+		w.Write(wwwfile)
 	}
 }
 
