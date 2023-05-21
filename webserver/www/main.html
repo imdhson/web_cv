@@ -1,30 +1,61 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Eventually by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style> @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
-    * { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
-      body{
-      padding-left: 100px;
-    }
-    </style> 
-</head>
-<body>     
-<h1>Web-CV</h1>
-<h2>Web에서 OpenCV를 사용해 볼 수 있는 간단한 예제입니다.</h2>
+	<head>
+		<title>Eventually by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/kit/assets/css/main.css" />
+		<style> @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+			* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+			</style>
+	</head>
+	<body class="is-preload">
 
+		<!-- Header -->
+			<header id="header">
+				<h1>Web-CV</h1>
+				<p>Web에서 OpenCV를 사용해 볼 수 있는 간단한 예제입니다.<br />
+				디자인 템플릿: <a href="http://html5up.net">HTML5 UP</a>.</p>
+			</header>
 
-<form action="/upload" enctype="multipart/form-data" method="post">
-  <label for="cvmode">컴퓨터 비전 모드</label>
-  <select id="cvmode" name="cvmode">
-    <option value="hog">HOG 디스크립터</option>
-    <option value="haar">Haarcascade</option>
-  </select>
-  <br><br>
-    <input type="file" id="originFile" name="originFile">
-    <input type="submit" value="변환 시작">
-  </form>
+		<!-- Signup Form -->
+		<style>
+			input {
+				padding-top:30px;
+				padding-left: 10%;
+			}
+			select {
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+		</style>
+		<form action="/upload" enctype="multipart/form-data" method="post">
+			<label for="cvmode">컴퓨터 비전 모드</label>
+			<select id="cvmode" name="cvmode">
+			  <option value="hog">HOG 디스크립터</option>
+			  <option value="haar">Haarcascade</option>
+			</select>
+			  <input type="file" id="originFile" name="originFile">
+			  <input type="submit" value="변환 시작">
+			</form>
+		  
 
-</body>
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="copyright">
+					<li>서버개발: 대구대 컴퓨터공학과 &copy; 손동휘</li>
+					<li>OpenCV 개발: 대구대 컴퓨터공학과 &copy; 이현준</li>
+					<li>디자인 템플릿: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="/kit/assets/js/main.js"></script>
+
+	</body>
 </html>
-
