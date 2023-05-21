@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -10,14 +11,6 @@ import (
 	"os"
 	"os/exec"
 	"strconv"
-)
-
-const (
-	jpeg = 1
-	jpg  = 2
-	png  = 3
-	mp4  = 4
-	avi  = 5
 )
 
 func exec_cv(mode string, filename string) bool {
@@ -56,13 +49,41 @@ func errHander(w http.ResponseWriter, r *http.Request) {
 
 func mainHanlder(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	wwwfile, err := ioutil.ReadFile("./www/main/main.html")
+	wwwfile, err := ioutil.ReadFile("./www/main.html")
 	if err != nil {
 		fmt.Println("www/main/main.html 을 로드할 수 없음")
 		log.Fatal(err)
 		panic(err)
 	} else {
 		fmt.Fprintf(w, string(wwwfile))
+	}
+}
+
+func kitHanlder(w http.ResponseWriter, r *http.Request, path string) error {
+	docsfile := dotFileType(path)
+	switch docsfile {
+	case "jpg":
+		w.Header().Set("Content-Type", "image/jpg; charset=utf-8")
+	case "png":
+		w.Header().Set("Content-Type", "image/png; charset=utf-8")
+	case "jpeg":
+		w.Header().Set("Content-Type", "image/jpeg; charset=utf-8")
+	case "js":
+		w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
+	case "css":
+		w.Header().Set("Content-Type", "text/css; charset=utf-8")
+	case "scss":
+		w.Header().Set("Content-Type", "text/css; charset=utf-8")
+	case "html":
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	}
+	wwwfile, err := os.ReadFile("./www/kit" + path)
+	if err != nil {
+		fmt.Println("www/kit 을 로드할 수 없음", path)
+		return err
+	} else {
+		w.Write(wwwfile)
+		return nil
 	}
 }
 
@@ -79,7 +100,10 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) error {
 	nowid := [2]string{setID(w, r, filetype), filetype}
 	fmt.Println(getIp(r), "에게서 업로드된 파일이름: ", fHeader.Filename, "파일타입: ", filetype, "nowid: ", nowid)
 	defer file.Close()
-	fileByte, err := ioutil.ReadAll(file)
+	fileByte, err := io.ReadAll(file)
+	if err != nil {
+		fmt.Println(nowid, "파일 수신 중 오류 발생")
+	}
 	willfileName := nowid[0] + "." + filetype
 	willfilePath := "../files/" + willfileName
 	ioutil.WriteFile(willfilePath, fileByte, 0644) //랜덤한 id.확장자 형식으로 파일을 씁니다.
@@ -120,8 +144,8 @@ func dotFileType(in string) string { //파일 이름을 받으면 . 이후의 �
 }
 
 func getID(w http.ResponseWriter, r *http.Request) (string, string) {
-	id, err := r.Cookie("id")      //key to value로 쿠키를 가져옴
-	ctype, err := r.Cookie("type") //key to value로 쿠키를 가져옴
+	id, err := r.Cookie("id")    //key to value로 쿠키를 가져옴
+	ctype, _ := r.Cookie("type") //key to value로 쿠키를 가져옴
 	if err != nil {
 		//쿠키가 없으니 nil 리턴
 		return "", ""
@@ -155,14 +179,17 @@ func getIp(r *http.Request) string {
 	return netIp.String()
 }
 
-func urlHandle(w http.ResponseWriter, r *http.Request) {
+func urlHandler(w http.ResponseWriter, r *http.Request) {
 	sv_urlpath := r.URL.Path[1:] //sv_urlpath에 유저가 어떤 url을 요청했는지 저장됨
 	if sv_urlpath == "" {
 		fmt.Println("Path: /", "IP주소: ", getIp(r))
 		mainHanlder(w, r)
-	} else if len(sv_urlpath) > 1 && sv_urlpath[0:4] == "main" { //첫 조건에 길이 확인이 있는 이유는 인덱스 초과 슬라이싱을 막기 위함.
-		fmt.Println(sv_urlpath, sv_urlpath[0:4], sv_urlpath[3:])
-		mainHanlder(w, r)
+	} else if len(sv_urlpath) > 1 && sv_urlpath[0:3] == "kit" { //첫 조건에 길이 확인이 있는 이유는 인덱스 초과 슬라이싱을 막기 위함.
+		fmt.Println("Path:/kit" + sv_urlpath[3:]) // kit 폴더를 가져오게됨
+		err := kitHanlder(w, r, sv_urlpath[3:])
+		if err != nil {
+			errHander(w, r)
+		}
 	} else if sv_urlpath == "result" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", getIp(r))
 		resultHanlder(w, r)
@@ -178,7 +205,7 @@ func urlHandle(w http.ResponseWriter, r *http.Request) {
 func main() {
 	const PORT int = 8080
 	server := http.NewServeMux()
-	server.Handle("/", http.HandlerFunc(urlHandle))
+	server.Handle("/", http.HandlerFunc(urlHandler))
 	fmt.Println("http://localhost:"+strconv.Itoa(PORT), "에서 요청을 기다리는 중:")
 	err := http.ListenAndServe(":"+strconv.Itoa(PORT), server)
 	if err != nil { // http 서버 시작 중 문제 발생시
