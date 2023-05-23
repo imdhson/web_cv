@@ -1,46 +1,20 @@
 import cv2
-from matplotlib import pyplot as plt
-import sys
+import cvlib as cv
+from IPython.display import Image, display
 
-filename = sys.argv[1]
+path = "./files/ive.png" # 사진 파일의 디렉토리
+display(Image(filename = path))
 
-#1
-src = cv2.imread(filename)
-hog = cv2.HOGDescriptor()
-hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+img = cv2.imread(path)
+conf = 0.5
+model_name = "yolov3"
 
-#2
-loc1, weights1 = hog.detect(src)
-print('len(loc1)=', len(loc1))
-dst1 = src.copy()
-w, h = hog.winSize
-for pt in loc1:
-    x, y = pt
-    cv2.rectangle(dst1, (x, y), (x + w, y + h), (255, 0, 0), 2)
+result = cv.detect_common_objects(img, confidence=conf, model=model_name)
+print(result)
 
-#3
-dst2 = src.copy()
-loc2, weights2 = hog.detectMultiScale(src)
-print('len(loc2)=', len(loc2))
-for rect in loc2:
-    x, y, w, h = rect
-    cv2.rectangle(dst2, (x, y), (x + w, y + h), (0, 255, 0), 2)
+output_path = "./files/ive_detect.png"
 
-#4
-dst3 = src.copy()
-loc3, weights3 = hog.detectMultiScale(src)
-print('len(loc3)=', len(loc3))
-for i, rect in enumerate(loc3):
-    x, y, w, h = rect
-    if weights3[i] > 0.5:
-        cv2.rectangle(dst3, (x, y), (x + w, y + h), (0, 0, 255), 2)
-    else:
-        cv2.rectangle(dst3, (x, y), (x + w, y + h), (255, 0, 0), 2)
+result_img = cv.object_detection.draw_bbox(img, *result)
 
-'''f = open("debug.txt", "w")
-f.write("filename")
-f.close()'''
-#cv2.imshow('dst3', dst3)
-#cv2.waitKey()
-#cv2.destroyAllWindows()
-cv2.imwrite(filename, dst3)
+cv2.imwrite(output_path, result_img) 
+display(Image(filename = output_path)) 
