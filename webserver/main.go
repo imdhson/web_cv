@@ -76,6 +76,14 @@ func kitHanlder(w http.ResponseWriter, r *http.Request, path string) error {
 		w.Header().Set("Content-Type", "text/css; charset=utf-8")
 	case "html":
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	case "mp4":
+		w.Header().Set("Content-Type", "video/mp4; charset=utf-8")
+	case "avi":
+		w.Header().Set("Content-Type", "video/avi; charset=utf-8")
+	case "mov":
+		w.Header().Set("Content-Type", "video/mov; charset=utf-8")
+	case "webm":
+		w.Header().Set("Content-Type", "video/webm; charset=utf-8")
 	}
 	wwwfile, err := os.ReadFile("./www/kit" + path)
 	if err != nil {
