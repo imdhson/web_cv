@@ -1,3 +1,3 @@
-module web_cv
+module webcv
 
 go 1.20
