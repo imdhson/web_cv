@@ -8,8 +8,8 @@ import (
 
 func Exec_cv(mode string, filename string) bool {
 	var vexec string
-	if mode == "hog" {
-		vexec = "main.py" //나중에 수정
+	if mode == "yolo" {
+		vexec = "yolo.py" //나중에 수정
 	} else if mode == "haar" { //나중에 수정
 		vexec = "haar.py" //나중에 수정
 	}
