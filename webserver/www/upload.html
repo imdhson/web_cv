@@ -13,35 +13,31 @@
 		<link rel="stylesheet" href="/kit/assets/css/main.css" />
 		<style> @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 			* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+			button {
+				width: 50%;
+				height:50px;
+				font-size: 20px;
+				font-family: sans-serif;
+			}
+			@media screen and (max-width: 640px) {
+			button{	width: 100%;}
+			}
 			</style>
 	</head>
 	<body class="is-preload">
 
 		<!-- Header -->
 			<header id="header">
-				<h1>Web_CV: 처리중</h1>
+				<h3>Web_CV: 업로드</h3>
 			</header>
 
-            <h2>
-				<script>  $(document).ready(function() {
-					$.ajax({
-					  type: "GET",
-					  url: "/ajax",
-					  dataType: "json",
-					  contentType : "application/json;charset=UTF-8"
-					  error: function() {
-						console.log('통신실패!!');
-					  },
-					  success: function(data) {
-						console.log("통신데이터 값 : " + data);
-					  }
-					});
-				  });
+            <h1>
+				<script>  $(document).ready(
+				$.get("/ajax",
+  function(data) { $("h1").html(data);}));
 				</script>
-
-
-			</h2>
-            <h1><a href="/result">결과 확인하러 가기</a></h1>
+			</h1>
+            <h2><button onclick="location.href='/result'">결과 확인하러 가기</button></h2>
             <h5><a href="/">메인으로 이동하기</a></h5>
 		  
 
