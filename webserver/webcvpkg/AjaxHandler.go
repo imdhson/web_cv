@@ -15,10 +15,13 @@ func AjaxHanlder(w http.ResponseWriter, r *http.Request, vs *[]VolatileStat, cv_
 	stat, id_peek := check(id_client, vs)
 	var data string
 	if stat {
-		_, _, id := Vs_peek(vs)
-		data = "서버에서 " + id + "를 처리 중: " + data_time
+		if id_client == id_peek {
+			data = "당신(" + id_peek + ")의 파일 처리중: " + data_time
+		} else {
+			data = "다른 사람(" + id_peek + ")의 파일 처리중: " + data_time
+		}
 	} else {
-		data = "당신의 요청 처리 완료 - " + "서버는 현재 " + id + " 수행 중이며" + data_time
+		data = "서버 유휴 중: " + data_time
 	}
 	data_json, err := json.Marshal(data)
 	if err != nil {
@@ -27,7 +30,7 @@ func AjaxHanlder(w http.ResponseWriter, r *http.Request, vs *[]VolatileStat, cv_
 	w.Write(data_json)
 }
 
-func check(id string, vs *[]VolatileStat) bool, string { //찾으면 true 반환
+func check(id string, vs *[]VolatileStat) (bool, string) { //찾으면 true 반환
 	target := id
 	slice := *vs
 	var rst bool = false
@@ -36,6 +39,10 @@ func check(id string, vs *[]VolatileStat) bool, string { //찾으면 true 반환
 			rst = true
 		}
 	}
-	fmt.Println("AJAX: ", id, *vs, rst)
-	return rst, Vs_peek(vs)
+	fmt.Println("AJAX: ", id, *vs)
+	if len(*vs) <= 0 {
+		return rst, "empty"
+	}
+	_, _, id_peek := Vs_peek(vs)
+	return rst, id_peek
 }

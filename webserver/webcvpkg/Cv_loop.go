@@ -10,5 +10,6 @@ func Cv_loop(vs *[]VolatileStat, cv_ing *bool, cv_time *time.Time) {
 		Exec_cv(filename, mode)
 		*cv_ing = false
 		Vs_pop(vs)
+		*cv_time = time.Now()
 	}
 }
