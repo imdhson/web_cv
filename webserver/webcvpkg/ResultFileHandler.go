@@ -8,7 +8,7 @@ import (
 
 func ResultFileHanlder(w http.ResponseWriter, r *http.Request) error {
 
-	nowid, filetype := getID(w, r)
+	nowid, filetype := GetID(w, r)
 	willfileName := nowid + "." + filetype
 	willfilePath := "../files/" + willfileName
 	file, err := ioutil.ReadFile(willfilePath)

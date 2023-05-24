@@ -2,7 +2,7 @@ package webcvpkg
 
 import "net/http"
 
-func getID(w http.ResponseWriter, r *http.Request) (string, string) {
+func GetID(w http.ResponseWriter, r *http.Request) (string, string) {
 	id, err := r.Cookie("id")    //key to value로 쿠키를 가져옴
 	ctype, _ := r.Cookie("type") //key to value로 쿠키를 가져옴
 	if err != nil {

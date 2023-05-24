@@ -19,15 +19,18 @@ func urlHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			webcvpkg.ErrHander(w, r)
 		}
+	} else if sv_urlpath == "upload" {
+		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
+		webcvpkg.UploadHanlder(w, r)
 	} else if sv_urlpath == "result" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
 		webcvpkg.ResultHanlder(w, r)
 	} else if sv_urlpath == "result/file" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
 		webcvpkg.ResultFileHanlder(w, r)
-	} else if sv_urlpath == "upload" {
+	} else if sv_urlpath == "uploadfile" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
-		webcvpkg.UploadHandler(w, r)
+		webcvpkg.UploadFileHandler(w, r)
 	} else {
 		fmt.Println("잘못된 Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
 		webcvpkg.ErrHander(w, r)
