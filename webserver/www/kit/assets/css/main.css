@@ -78,7 +78,7 @@ html {
   box-sizing: inherit; }
 
 html, body {
-  height: 100%;
+  height: auto;
   overflow-x: hidden;
   width: 100%; }
   @media screen and (max-height: 640px) {
@@ -779,7 +779,7 @@ button,
 /* Header */
 #header h1 {
   font-size: 3.25em;
-  margin: 0 0 0.55em 0; }
+  margin: 0 0 0.55em 0; } /* 0 0 0.55em 0;*/
 
 #header p {
   font-size: 1.35em;

@@ -8,6 +8,8 @@ import (
 	"webcv/webcvpkg"
 )
 
+var VolatileStat []int //전역 변수 아직에러
+
 func urlHandler(w http.ResponseWriter, r *http.Request) {
 	sv_urlpath := r.URL.Path[1:] //sv_urlpath에 유저가 어떤 url을 요청했는지 저장됨
 	if sv_urlpath == "" {
@@ -25,10 +27,13 @@ func urlHandler(w http.ResponseWriter, r *http.Request) {
 	} else if sv_urlpath == "result" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
 		webcvpkg.ResultHanlder(w, r)
+	} else if sv_urlpath == "ajax" {
+		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
+		webcvpkg.AjaxHanlder(w, r)
 	} else if sv_urlpath == "result/file" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
 		webcvpkg.ResultFileHanlder(w, r)
-	} else if sv_urlpath == "uploadfile" {
+	} else if sv_urlpath == "uploadfile" { //upload/file 로 하면 쿠키 할당이 안되는 버그가있음. 원인 못찾음
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
 		webcvpkg.UploadFileHandler(w, r)
 	} else {

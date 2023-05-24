@@ -9,6 +9,7 @@
 		<title>Eventually by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 		<link rel="stylesheet" href="/kit/assets/css/main.css" />
 		<style> @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 			* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
@@ -21,7 +22,25 @@
 				<h1>Web_CV: 처리중</h1>
 			</header>
 
-            <h2>업로드 완료 후 컴퓨터비전으로 처리 중 입니다.</h2>
+            <h2>
+				<script>  $(document).ready(function() {
+					$.ajax({
+					  type: "GET",
+					  url: "/ajax",
+					  dataType: "json",
+					  contentType : "application/json;charset=UTF-8"
+					  error: function() {
+						console.log('통신실패!!');
+					  },
+					  success: function(data) {
+						console.log("통신데이터 값 : " + data);
+					  }
+					});
+				  });
+				</script>
+
+
+			</h2>
             <h1><a href="/result">결과 확인하러 가기</a></h1>
             <h5><a href="/">메인으로 이동하기</a></h5>
 		  
