@@ -10,12 +10,29 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/kit/assets/css/main.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+		<script>
+			function forloop() {
+			  $.get("/ajax", function(data) {
+				$("h2-2").html(data);
+			}
+			 );
+			}
+
+	$(document).ready(function() {
+	  setInterval(forloop, 500);
+	});
+
+	</script>
+
+
 		<style> @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 			* { font-family: 'Spoqa Han Sans Neo', 'sans-serif'; }
+			h2-2 {font-family: sans-serif;}
 			</style>
 	</head>
 	<body class="is-preload">
-
 		<!-- Header -->
 			<header id="header">
 				<h1>Web_CV</h1>
@@ -43,6 +60,8 @@
 			  <input type="file" id="originFile" name="originFile">
 			  <input type="submit" value="변환 시작">
 			</form>
+			<h2-2>
+			</h2-2>
 		  
 
 		<!-- Footer -->

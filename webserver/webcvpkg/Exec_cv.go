@@ -6,7 +6,7 @@ import (
 	"os/exec"
 )
 
-func Exec_cv(mode string, filename string) bool {
+func Exec_cv(filename string, mode string) bool {
 	var vexec string
 	if mode == "yolo" {
 		vexec = "yolo.py" //나중에 수정

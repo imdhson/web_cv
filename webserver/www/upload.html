@@ -32,12 +32,21 @@
 			</header>
 
             <h1>
-				<script>  $(document).ready(
-				$.get("/ajax",
-  function(data) { $("h1").html(data);}));
+				<script>
+						function forloop() {
+  						$.get("/ajax", function(data) {
+   						 $("h1").html(data);
+						}
+						 );
+						}
+
+				$(document).ready(function() {
+  				setInterval(forloop, 500);
+				});
+
 				</script>
 			</h1>
-            <h2><button onclick="location.href='/result'">결과 확인하러 가기</button></h2>
+            <h3><button onclick="location.href='/result'">결과 확인하러 가기</button></h3>
             <h5><a href="/">메인으로 이동하기</a></h5>
 		  
 

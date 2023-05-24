@@ -5,10 +5,13 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 	"webcv/webcvpkg"
 )
 
-var VolatileStat []int
+var vs []webcvpkg.VolatileStat //전역변수로 휘발성 템프 변수 만듬
+var cv_ing bool = false
+var cv_time time.Time
 
 func urlHandler(w http.ResponseWriter, r *http.Request) {
 	sv_urlpath := r.URL.Path[1:] //sv_urlpath에 유저가 어떤 url을 요청했는지 저장됨
@@ -23,13 +26,16 @@ func urlHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if sv_urlpath == "upload" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
-		webcvpkg.UploadFileHandler(w, r, &VolatileStat)
+		webcvpkg.UploadFileHandler(w, r, &vs)
 	} else if sv_urlpath == "result" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
 		webcvpkg.ResultHanlder(w, r)
 	} else if sv_urlpath == "ajax" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
-		webcvpkg.AjaxHanlder(w, r, &VolatileStat)
+
+		go webcvpkg.Cv_loop(&vs, &cv_ing, &cv_time) // 요청시 마다 빈 것이 있는지&&cv가 비활성화인지 확인 go키워드로 백그라운드로 보내버림
+
+		webcvpkg.AjaxHanlder(w, r, &vs, &cv_time)
 	} else if sv_urlpath == "result/file" {
 		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
 		webcvpkg.ResultFileHanlder(w, r)
@@ -50,3 +56,15 @@ func main() {
 		panic(err)
 	}
 }
+
+/*
+//기능 추가: exec_cv를 핸들러에서 실행하지말고 VolatileStat을 정찰하고 수행하는 것으로 변경하기
+	for {
+		if len(vs) > 0 {
+			fmt.Println("CV 작동")
+			filename, mode, _ := webcvpkg.Vs_pop(&vs)
+			webcvpkg.Exec_cv(filename, mode)
+		}
+	}
+
+*/
