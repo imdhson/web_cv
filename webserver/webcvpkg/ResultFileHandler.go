@@ -2,8 +2,8 @@ package webcvpkg
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 func ResultFileHanlder(w http.ResponseWriter, r *http.Request) error {
@@ -11,7 +11,8 @@ func ResultFileHanlder(w http.ResponseWriter, r *http.Request) error {
 	nowid, filetype := GetID(w, r)
 	willfileName := nowid + "." + filetype
 	willfilePath := "../files/" + willfileName
-	file, err := ioutil.ReadFile(willfilePath)
+	//file, err := ioutil.ReadFile(willfilePath)
+	file, err := os.ReadFile(willfilePath)
 	if err != nil {
 		fmt.Println(willfilePath, " 로드할 수 없음")
 		//log.Fatal(err)

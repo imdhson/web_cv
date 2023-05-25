@@ -3,8 +3,8 @@ package webcvpkg
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
+	"os"
 )
 
 func UploadFileHandler(w http.ResponseWriter, r *http.Request, vs *[]VolatileStat) error {
@@ -31,6 +31,7 @@ func UploadFileHandler(w http.ResponseWriter, r *http.Request, vs *[]VolatileSta
 		return err
 	}
 	willfilePath := "../files/" + willfileName
-	ioutil.WriteFile(willfilePath, fileByte, 0644) //랜덤한 id.확장자 형식으로 파일을 씁니다.
+	//ioutil.WriteFile(willfilePath, fileByte, 0644) //deprecated
+	os.WriteFile(willfilePath, fileByte, 0644) //랜덤한 id.확장자 형식으로 파일을 씁니다.
 	return nil
 }

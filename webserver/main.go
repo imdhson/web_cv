@@ -56,15 +56,3 @@ func main() {
 		panic(err)
 	}
 }
-
-/*
-//기능 추가: exec_cv를 핸들러에서 실행하지말고 VolatileStat을 정찰하고 수행하는 것으로 변경하기
-	for {
-		if len(vs) > 0 {
-			fmt.Println("CV 작동")
-			filename, mode, _ := webcvpkg.Vs_pop(&vs)
-			webcvpkg.Exec_cv(filename, mode)
-		}
-	}
-
-*/
