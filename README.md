@@ -39,5 +39,5 @@ If server is ON, try here: http://webcv.imdhs.one
 ### 4. Start with your modern webbrowser.
 http://localhost:[port you selected]
 
-&copy; 대구대학교 컴퓨터공학과 손동휘, 이현준
+&copy; Daegu University Computer Enginnering imdhson, Leehyunjoon
 
