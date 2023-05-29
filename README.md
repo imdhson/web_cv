@@ -16,6 +16,15 @@ If server is ON, try here: http://webcv.imdhs.one
     
     sudo yum install -y golang;  sudo yum install -y python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv ; go build; ./webcv
     
+### macOS
+    
+    brew install golang;  brew install python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv ; go build; ./webcv
+    
+### Windows
+#### Install GoLang, python manually. and type below.
+
+    pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv ; go build; ./webcv
+    
 ----
 
 ## Start sequencly:
