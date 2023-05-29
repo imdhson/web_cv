@@ -1,7 +1,9 @@
 import cvlib as cv
 import cv2
+import sys
 
-path = 'IU.jpg' #-- 이미지 파일 경로 입력
+path = sys.argv[1]
+#path = 'IU.jpg' #-- 이미지 파일 경로 입력
 img = cv2.imread(path)
 
  
@@ -20,7 +22,4 @@ for idx, f in enumerate(face):
     face_region = cv2.resize(face_region, (S, B), interpolation=cv2.INTER_AREA)
     img[startY:endY, startX:endX] = face_region
  
-cv2.imshow("FaceMosaic", img)
-
-cv2.waitKey()
-cv2.destroyAllWindows()
+cv2.imwrite(path, img) # 반영된 이미지로 파일 대체
