@@ -61,3 +61,4 @@ If server is ON, try here: http://webcv.imdhs.one
 
 Daegu University Computer Enginnering &copy; imdhson,&copy;  Leehyunjoon
 
+Opensoure usage: OpenCV, Golang, html5up.net
