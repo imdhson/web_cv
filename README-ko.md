@@ -13,6 +13,15 @@ python-OpenCV, Go언어 웹서버를 이용합니다.<br>
 ### Fedora, CentOS, RedHat
     
     sudo yum install -y golang;  sudo yum install -y python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv ; go build; ./webcv
+
+### macOS
+    
+    brew install golang;  brew install python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv ; go build; ./webcv
+    
+### Windows
+#### python, GoLang 설치하고,
+
+    pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv ; go build; ./webcv
     
 ----
 
