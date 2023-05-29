@@ -34,10 +34,13 @@ If server is ON, try here: http://webcv.imdhs.one
 
     pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib
   
-### 3. clone and build
-  git clone https://github.com/imdhson/web_cv.git ; cd web_cv ; go build; ./webcv
+### 3. Clone and build
+  
+    git clone https://github.com/imdhson/web_cv.git ; cd web_cv ; go build; ./webcv
+  
 ### 4. Start with your modern webbrowser.
-http://localhost:[port you selected]
 
-&copy; Daegu University Computer Enginnering imdhson, Leehyunjoon
+    http://localhost:[port you selected]
+
+Daegu University Computer Enginnering &copy; imdhson,&copy;  Leehyunjoon
 
