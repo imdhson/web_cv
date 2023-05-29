@@ -12,6 +12,8 @@ func Exec_cv(filename string, mode string) bool {
 		vexec = "yolo.py" //나중에 수정
 	} else if mode == "haar" { //나중에 수정
 		vexec = "haar.py" //나중에 수정
+	} else if mode == "mosaic" {
+		vexec = "mosaic.py"
 	}
 	arg1 := "../opencv/" + vexec
 	arg2 := "../files/" + filename

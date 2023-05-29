@@ -46,11 +46,13 @@ func urlHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	const PORT int = 8080
+	var Port int = 0
+	fmt.Println("사용할 Port 번호를 입력해주세요: ")
+	fmt.Scanf("%d", &Port)
 	server := http.NewServeMux()
 	server.Handle("/", http.HandlerFunc(urlHandler))
-	fmt.Println("http://localhost:"+strconv.Itoa(PORT), "에서 요청을 기다리는 중:")
-	err := http.ListenAndServe(":"+strconv.Itoa(PORT), server)
+	fmt.Println("http://localhost:"+strconv.Itoa(Port), "에서 요청을 기다리는 중:")
+	err := http.ListenAndServe(":"+strconv.Itoa(Port), server)
 	if err != nil { // http 서버 시작 중 문제 발생시
 		log.Fatal(err)
 		panic(err)
