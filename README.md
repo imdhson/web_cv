@@ -1,4 +1,6 @@
 # web_cv
+[한국어 README.md](README-ko.md)
+<br>
 A simple way to using OpenCV function on the web.<br>
 using python-OpenCV, Golang WebServer.<br>
 additionaly, simple implementation of ajax json transfer.
