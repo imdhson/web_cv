@@ -39,7 +39,7 @@ func check(id string, vs *[]VolatileStat) (bool, string) { //찾으면 true 반�
 			rst = true
 		}
 	}
-	fmt.Println("AJAX: ", id, *vs)
+	//fmt.Println("AJAX로 json 응답할 데이터: ", id, *vs)
 	if len(*vs) <= 0 {
 		return rst, "empty"
 	}
