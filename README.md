@@ -39,6 +39,14 @@ If server is ON, try here: http://webcv.imdhs.one
 
     sudo yum install -y golang;  sudo yum install -y python
   
+#### macOS
+
+    sudo brew install golang;  sudo brew install python
+
+#### Windows
+##### [GoLang install](https://go.dev/dl/)
+##### [Python install](https://www.python.org/downloads/)
+    
 ### 2. Install the dependency packages.
 
     pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib
