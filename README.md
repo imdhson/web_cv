@@ -26,7 +26,7 @@ If server is ON, try here: http://webcv.imdhs.one
 
     sudo apt install -y golang;  sudo apt install -y python;
   
-#### Fedora, Centos, RedHat
+#### Fedora, CentOS, RedHat
 
     sudo yum install -y golang;  sudo yum install -y python
   
