@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func ErrHander(w http.ResponseWriter, r *http.Request) {
+func ErrHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	//wwwfile, err := ioutil.ReadFile("./www/err.html")
 	wwwfile, err := os.ReadFile("./www/err.html")

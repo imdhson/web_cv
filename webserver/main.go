@@ -6,42 +6,42 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-	"webcv/webcvpkg"
+	our "webcv/webcvpkg"
 )
 
-var vs []webcvpkg.VolatileStat //전역변수로 휘발성 템프 변수 만듬
+var vs []our.VolatileStat //전역변수로 휘발성 템프 변수 만듬
 var cv_ing bool = false
 var cv_time time.Time
 
 func urlHandler(w http.ResponseWriter, r *http.Request) {
 	sv_urlpath := r.URL.Path[1:] //sv_urlpath에 유저가 어떤 url을 요청했는지 저장됨
 	if sv_urlpath == "" {
-		fmt.Println("Path: /", "IP주소: ", webcvpkg.GetIP(r))
-		webcvpkg.MainHanlder(w, r)
+		fmt.Println("Path: /", "IP주소: ", our.GetIP(r))
+		our.MainHanlder(w, r)
 	} else if len(sv_urlpath) > 1 && sv_urlpath[0:3] == "kit" { //첫 조건에 길이 확인이 있는 이유는 인덱스 초과 슬라이싱을 막기 위함.
 		//fmt.Println("Path:/kit" + sv_urlpath[3:]) // kit 폴더를 가져오게됨
-		err := webcvpkg.KitHanlder(w, r, sv_urlpath[3:])
+		err := our.KitHanlder(w, r, sv_urlpath[3:])
 		if err != nil {
-			webcvpkg.ErrHander(w, r)
+			our.ErrHandler(w, r)
 		}
 	} else if sv_urlpath == "upload" {
-		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
-		webcvpkg.UploadFileHandler(w, r, &vs)
+		fmt.Println("Path: ", sv_urlpath, "IP주소: ", our.GetIP(r))
+		our.UploadFileHandler(w, r, &vs)
 	} else if sv_urlpath == "result" {
-		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
-		webcvpkg.ResultHanlder(w, r)
+		fmt.Println("Path: ", sv_urlpath, "IP주소: ", our.GetIP(r))
+		our.ResultHanlder(w, r)
 	} else if sv_urlpath == "ajax" {
-		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
+		fmt.Println("Path: ", sv_urlpath, "IP주소: ", our.GetIP(r))
 
-		go webcvpkg.Cv_loop(&vs, &cv_ing, &cv_time) // 요청시 마다 빈 것이 있는지&&cv가 비활성화인지 확인 go키워드로 백그라운드로 보내버림
+		go our.Cv_loop(&vs, &cv_ing, &cv_time) // 요청시 마다 빈 것이 있는지&&cv가 비활성화인지 확인 go키워드로 백그라운드로 보내버림
 
-		webcvpkg.AjaxHanlder(w, r, &vs, &cv_time)
+		our.AjaxHanlder(w, r, &vs, &cv_time)
 	} else if sv_urlpath == "result/file" {
-		fmt.Println("Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
-		webcvpkg.ResultFileHanlder(w, r)
+		fmt.Println("Path: ", sv_urlpath, "IP주소: ", our.GetIP(r))
+		our.ResultFileHanlder(w, r)
 	} else {
-		fmt.Println("잘못된 Path: ", sv_urlpath, "IP주소: ", webcvpkg.GetIP(r))
-		webcvpkg.ErrHander(w, r)
+		fmt.Println("잘못된 Path: ", sv_urlpath, "IP주소: ", our.GetIP(r))
+		our.ErrHandler(w, r)
 	}
 }
 
