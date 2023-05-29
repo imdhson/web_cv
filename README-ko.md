@@ -40,4 +40,4 @@ python-OpenCV, Go언어 웹서버를 이용합니다.<br>
 
     http://localhost:[서버시작시 고른 포트]
 
-&copy; 대구대학교 컴퓨터공학과 손동휘, 이현준
+대구대학교 컴퓨터공학과&copy;  손동휘,&copy;  이현준
