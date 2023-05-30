@@ -2,8 +2,8 @@ import cv2
 import sys
 
 # 이미지를 불러옵니다.
-# path = sys.argv[1]
-path = '../files/ive.png'
+path = sys.argv[1]
+# path = '../files/ive.png'
 img = cv2.imread(path)
 
 
