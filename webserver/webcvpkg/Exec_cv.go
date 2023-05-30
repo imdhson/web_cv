@@ -8,12 +8,21 @@ import (
 
 func Exec_cv(filename string, mode string) bool {
 	var vexec string
-	if mode == "yolo" {
-		vexec = "yolo.py" //나중에 수정
-	} else if mode == "haar" { //나중에 수정
-		vexec = "haar.py" //나중에 수정
-	} else if mode == "mosaic" {
+	switch mode {
+	case "yolo":
+		vexec = "yolo.py"
+	case "haar":
+		vexec = "haar.py"
+	case "mosaic":
 		vexec = "mosaic.py"
+	case "edsr":
+		vexec = "edsr.py"
+	case "espcn":
+		vexec = "espcn.py"
+	case "grayscale":
+		vexec = "grayscale.py"
+	case "canny":
+		vexec = "canny.py"
 	}
 	arg1 := "../opencv/" + vexec
 	arg2 := "../files/" + filename
