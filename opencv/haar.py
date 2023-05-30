@@ -26,8 +26,6 @@ body = body_cascade.detectMultiScale(grayImage1, 1.01, 10, minSize=(30, 30))
 for (x,y,w,h) in body :         
     cv2.rectangle(image1,(x,y),(x+w,y+h),(0,0,255),3)
 
-#plt.subplot(1, 3, 1)
-#plt.imshow(image1, cmap='gray')
 
 
 # 2 = 검출한 사각형 사이 최소 간격, minSize = 지정한 크기 이상의 사각형만 가져온다.
@@ -36,18 +34,9 @@ body = body_cascade.detectMultiScale(grayImage2,1.01, 2, 0, minSize=(70, 70))
 for (x,y,w,h) in body :        
     cv2.rectangle(image2,(x,y),(x+w,y+h),(0,0,255),3)
 
-#plt.subplot(1, 3, 2)
-#plt.imshow(image2, cmap='gray')
-
-
 # minSize가 없을 때의 결과
 body = body_cascade.detectMultiScale(grayImage3, 1.01, 2)
 for (x,y,w,h) in body : 
     cv2.rectangle(image3,(x,y),(x+w,y+h),(0,0,255),3)
 
-#plt.subplot(1, 3, 3)
-#plt.imshow(image3, cmap='gray')
-
-
-#plt.show()
 cv2.imwrite(filename, image3)
