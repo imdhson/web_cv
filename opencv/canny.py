@@ -2,8 +2,6 @@ import cv2
 import sys
 
 path = sys.argv[1]
-img = cv2.imread(path)
-
 gray_img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
 
 threshold1 = 0
