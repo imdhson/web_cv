@@ -3,7 +3,7 @@ import cv2
 import sys
 
 path = sys.argv[1]
-#path = 'IU.jpg' #-- 이미지 파일 경로 입력
+# path = 'IU1.jpg' #-- 이미지 파일 경로 입력
 img = cv2.imread(path)
 
  
