@@ -14,20 +14,20 @@ If server is ON, try here: http://webcv.imdhs.one
 ## Quick execution:
 ### Ubuntu, Debian
 
-    sudo apt install -y golang;  sudo apt install -y python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
+    sudo apt install -y golang;  sudo apt install -y python; pip install numpy; pip install opencv-python; pip install opencv-contrib-python ; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
  
 ### Fedora, Centos, RedHat
     
-    sudo yum install -y golang;  sudo yum install -y python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
+    sudo yum install -y golang;  sudo yum install -y python; pip install numpy; pip install opencv-python; pip install opencv-contrib-python ; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
     
 ### macOS
     
-    brew install golang;  brew install python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
+    brew install golang;  brew install python; pip install numpy; pip install opencv-python; pip install opencv-contrib-python ;pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
     
 ### Windows
 #### Install GoLang, python manually. and type below.
 
-    pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
+    pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;pip install opencv-contrib-python;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
     
 ----
 
@@ -53,7 +53,7 @@ If server is ON, try here: http://webcv.imdhs.one
     
 ### 2. Install the dependency packages.
 
-    pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib
+    pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib; pip install opencv-contrib-python
   
 ### 3. Clone and build
   

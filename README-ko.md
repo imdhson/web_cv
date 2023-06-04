@@ -8,20 +8,20 @@ python-OpenCV, Go언어 웹서버를 이용합니다.<br>
 ## 빠른 실행:
 ### Ubuntu, Debian
 
-    sudo apt install -y golang;  sudo apt install -y python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
+    sudo apt install -y golang;  sudo apt install -y python; pip install numpy; pip install opencv-python; pip install opencv-contrib-python ;pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
  
 ### Fedora, CentOS, RedHat
     
-    sudo yum install -y golang;  sudo yum install -y python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
+    sudo yum install -y golang;  sudo yum install -y python; pip install numpy; pip install opencv-python; pip install opencv-contrib-python ;pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
 
 ### macOS
     
-    brew install golang;  brew install python; pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
+    brew install golang;  brew install python; pip install numpy; pip install opencv-python; pip install opencv-contrib-python;pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
     
 ### Windows
 #### python, GoLang 설치하고,아래를 수행하세요.
 
-    pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
+    pip install numpy; pip install opencv-python; pip install matplotlib; pip install opencv-contrib-python ;pip install cvlib;git clone https://github.com/imdhson/web_cv.git ; cd web_cv/webserver/ ; go build; ./webcv
     
 ----
 
@@ -47,7 +47,7 @@ python-OpenCV, Go언어 웹서버를 이용합니다.<br>
   
 ### 2. 의존 패키지 설치하기
 
-    pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib
+    pip install numpy; pip install opencv-python; pip install matplotlib; pip install cvlib ; pip install opencv-contrib-python
   
 ### 3. Clone과 빌드
 
